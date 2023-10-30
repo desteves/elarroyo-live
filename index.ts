@@ -3,7 +3,7 @@ import * as cloudflare from "@pulumi/cloudflare";
 import * as fs from "fs";
 import { populateWorkersKv } from './populate';
 
-const DEMOFLAG = "-test"
+const DEMOFLAG = "-demo"
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Step 1 -  //////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ export const testConfig = accountId + zoneId + domain + DEMOFLAG
 //     accountId: accountId,
 //     title: "elarroyo"+DEMOFLAG,
 //   });
-// A sample entry to the Key Value Namespace
+// // A sample entry to the Key Value Namespace
 // const kv = new cloudflare.WorkersKv("test", {
 //   accountId: accountId,
 //   namespaceId: namespace.id,
@@ -59,8 +59,7 @@ export const testConfig = accountId + zoneId + domain + DEMOFLAG
 //     // Read the content of the worker from a file
 //     content: fs.readFileSync("./app/worker.ts", "utf8"),
 //     kvNamespaceBindings: [{
-//       //   name: "KV_NAMESPACE_BINDING",  
-//       name: "elarroyo"+DEMOFLAG, /// <- super duper important!!!
+//       name: "KV_NAMESPACE_BINDING", /// <- super duper important!!!
 //       namespaceId: namespace.id,
 //     }],
 //   });

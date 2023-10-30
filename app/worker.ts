@@ -8,10 +8,11 @@ addEventListener("fetch", event => {
     ///////////////////////////////////////////////////////////////////
     /////////// picks a random el arroyo sign from the KV Namespace
     const min = 2;
-    const max = 2441;
+    const max = 7;
     const randomInteger = Math.floor(Math.random() * (max - min + 1)) + min;
-
+    // default
     const value = "If you don’t pay your exorcist, do you get repossessed"
+    
     // Step 4 -
     // const value = await KV_NAMESPACE_BINDING.get(randomInteger.toString());
   
