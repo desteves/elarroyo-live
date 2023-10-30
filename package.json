@@ -1,0 +1,13 @@
+{
+    "name": "elarroyo-live",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/cloudflare": "^5.13.0",
+        "@pulumi/pulumi": "^3.0.0",
+        "csv-parser": "^3.0.0",
+        "fs": "^0.0.1-security"
+    }
+}
