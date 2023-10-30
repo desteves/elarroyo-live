@@ -12,11 +12,7 @@ addEventListener("fetch", event => {
     const randomInteger = Math.floor(Math.random() * (max - min + 1)) + min;
 
     const value = "If you don’t pay your exorcist, do you get repossessed"
-    
-    // Step 2 -
-    // const value = await KV_NAMESPACE_BINDING.get("test");
-
-    // Step 3 -
+    // Step 4 -
     // const value = await KV_NAMESPACE_BINDING.get(randomInteger.toString());
   
     ///////////////////////////////////////////////////////////////////

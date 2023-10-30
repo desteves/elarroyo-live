@@ -3,16 +3,16 @@ import * as cloudflare from "@pulumi/cloudflare";
 import * as fs from "fs";
 import { populateWorkersKv } from './populate';
 
-const DEMOFLAG = "-live"
+const DEMOFLAG = "-test"
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Step 1 -  //////////////////////////////////////////////////////
 // Check needed environment variables are set up
-// const config = new pulumi.Config();
-// const accountId = config.require("accountId");
-// const zoneId = config.require("zoneId");
-// const domain = config.require("domain")
-// export const testConfig = accountId + zoneId + domain + DEMOFLAG
+const config = new pulumi.Config();
+const accountId = config.require("accountId");
+const zoneId = config.require("zoneId");
+const domain = config.require("domain")
+export const testConfig = accountId + zoneId + domain + DEMOFLAG
 ///////////////////////////////////////////////////////////////////
 // RUN pulumi up -y
 
@@ -21,9 +21,9 @@ const DEMOFLAG = "-live"
 ///////////////////////////////////////////////////////////////////
 // Step 2 -  //////////////////////////////////////////////////////
 // A Key Value Namespace
-// const namespace = new cloudflare.WorkersKvNamespace("elarroyo-ns"+DEMOFLAG, {
+// const namespace = new cloudflare.WorkersKvNamespace("elarroyo"+DEMOFLAG, {
 //     accountId: accountId,
-//     title: "elarroyo-ns-"+DEMOFLAG,
+//     title: "elarroyo"+DEMOFLAG,
 //   });
 // A sample entry to the Key Value Namespace
 // const kv = new cloudflare.WorkersKv("test", {
@@ -33,8 +33,8 @@ const DEMOFLAG = "-live"
 //   value: "test test test 123",
 // });
 ///////////////////////////////////////////////////////////////////
-// EDIT app/worker.ts to use this test KV entry
 // RUN pulumi up -y
+// [Optional] OPEN https://dash.cloudflare.com/24725f46259aa3c2a1d7810649cd7428/workers/kv/namespaces 
 
 
 ///////////////////////////////////////////////////////////////////
@@ -45,56 +45,62 @@ const DEMOFLAG = "-live"
 ///////////////////////////////////////////////////////////////////
 // RUN npm install fs   
 // RUN npm install csv-parser 
-// EDIT app/worker.ts to use a random KV entry
 // RUN pulumi up -y
+// [Optional] OPEN https://dash.cloudflare.com/24725f46259aa3c2a1d7810649cd7428/workers/kv/namespaces 
 
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Step 4 -  //////////////////////////////////////////////////////
 // A Worker script to invoke with access to the Key Value Namespace
-// const script = new cloudflare.WorkerScript("elarroyo-script"+DEMOFLAG, {
+// const script = new cloudflare.WorkerScript("elarroyo"+DEMOFLAG, {
 //     accountId: accountId,
-//     name: "elarroyo-script"+DEMOFLAG,
+//     name: "elarroyo"+DEMOFLAG,
 //     // Read the content of the worker from a file
 //     content: fs.readFileSync("./app/worker.ts", "utf8"),
 //     kvNamespaceBindings: [{
-//       name: "KV_NAMESPACE_BINDING",
+//       //   name: "KV_NAMESPACE_BINDING",  
+//       name: "elarroyo"+DEMOFLAG, /// <- super duper important!!!
 //       namespaceId: namespace.id,
 //     }],
 //   });
 ///////////////////////////////////////////////////////////////////
+// EDIT app/worker.ts to use a random KV entry
 // RUN pulumi up -y
+// [Optional] OPEN https://dash.cloudflare.com/24725f46259aa3c2a1d7810649cd7428/workers-and-pages
+// Note, no route...yet!
   
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Step 5 -  //////////////////////////////////////////////////////
 // A Worker route to serve requests and the Worker script
-// const route = new cloudflare.WorkerRoute("elarroyo-route"+DEMOFLAG, {
-// zoneId: zoneId,
-// pattern: "elarroyo"+DEMOFLAG+"." + domain,
-// scriptName: script.name,
+// const route = new cloudflare.WorkerRoute("elarroyo"+DEMOFLAG, {
+//     zoneId: zoneId,
+//     pattern: "elarroyo"+DEMOFLAG+"." + domain,
+//     scriptName: script.name,
 // });
 // An Output displaying the url for the app
-//   export const url = route.pattern
+// export const url = route.pattern
 ///////////////////////////////////////////////////////////////////
 // RUN pulumi up -y
-
+// [Optional] OPEN https://dash.cloudflare.com/24725f46259aa3c2a1d7810649cd7428/workers-and-pages
+// Note, no dns record...yet!
 
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 // Step 6 -  //////////////////////////////////////////////////////
 // A DNS record to access the route from the domain
-//   const record = new cloudflare.Record("elarroyo-record"+DEMOFLAG, {
+// const record = new cloudflare.Record("elarroyo"+DEMOFLAG, {
 //     zoneId: zoneId,
-//     name: script.name+DEMOFLAG,
+//     name: "elarroyo"+DEMOFLAG,
 //     value: "192.0.2.1",
 //     type: "A",
 //     proxied: true
-//   });
+// });
 ///////////////////////////////////////////////////////////////////
 // RUN pulumi up -y
+// [Optional] OPEN https://dash.cloudflare.com/24725f46259aa3c2a1d7810649cd7428/atxyall.com/dns/records
 
 
 
