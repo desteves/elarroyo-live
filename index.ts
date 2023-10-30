@@ -111,9 +111,9 @@ const DEMOFLAG = "-live"
 // Step 7 -  //////////////////////////////////////////////////////
   // A Caching Rule to avoid caching. TODO - fix (?) 
   // Caching itself will still depend on the cache-control header 
-  // const caching = new cloudflare.Ruleset("elarroyo-rule", {
+  // const caching = new cloudflare.Ruleset("elarroyo-rule"+DEMOFLAG, {
   //   zoneId: zoneId,
-  //   name: "elarroyo-rule",
+  //   name: "elarroyo-rule"+DEMOFLAG,
   //   description: "Avoid caching",
   //   kind: "zone",
   //   phase: "http_request_cache_settings",
@@ -129,7 +129,7 @@ const DEMOFLAG = "-live"
   //         mode: "bypass",
   //       },
   //     },
-  //     expression: "(http.request.full_uri contains \"el-arroyo\")",
+  //     expression: "(http.request.full_uri contains \""+DEMOFLAG+"\")",
   //     description: "Set cache settings and custom cache key for " + route.pattern,
   //     enabled: true
   //   }]
